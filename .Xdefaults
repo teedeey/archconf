@@ -1,0 +1,14 @@
+*xterm*background: #000000
+*xterm*foreground: #ffffff
+xterm*faceName: miriam mono
+xterm*faceSize: 9
+
+!! Window decoration colors
+Emwm*client*background: #727170
+Emwm*client*activeBackground: #e0dedb
+Emwm*icon*activeBackground: #e0dedb
+Emwm*armColor: black
+Emwm*iconDecoration: label activelabel
+Emwm*iconPlacement: bottom left
+Emwm*fontList: 9x13
+Emwm*menu*fontList: 9x15
