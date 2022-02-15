@@ -6,7 +6,7 @@ if [ "$EUID" -ne 0 ]
 fi
 
 echo "This script installs doas, Enhanced Motif WM (emwm), xautolock, xterm, LibreWolf, Thunderbird, and my configs."
-echo "Run this from the git repo directory, yay MUST be installed."
+echo "Run this from the git repo directory."
 echo "Supported distros: Arch-based distros, that's it. If you're running anything else, here's your chance to quit."
 sleep 8
 echo "OK, continuing..."
@@ -24,7 +24,7 @@ pacman -Syu
 echo "Installing development packages..."
 pacman --needed --noconfirm -S base-devel git wget
 
-echo "Configuring yay AUR helper..."
+echo "Configuring doas and sudo..."
 pacman --needed --noconfirm -S sudo opendoas
 chmod 0660 /etc/sudoers
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
@@ -71,17 +71,15 @@ cd ..
 chown -R $username:$username utils
 cp -a utils /usr/local/src
 rm -rf utils
-su -c 'yay -S catclock-git' - $username
 chown $username:$username .xinitrc
 chown $username:$username .Xdefaults
 cp .xinitrc .Xdefaults /home/$username
 
 echo "Installing LibreWolf and Thunderbird..."
-su -c 'yay -S librewolf-bin' - $username
 pacman --needed --noconfirm -S thunderbird
 
 echo "Installing screenshot scripts..."
 chown -R $username:$username screenshot-scripts
 cp -a screenshot-scripts/* /usr/local/bin
 
-echo "DONE! Please reboot and login, emwm should start automatically."
+echo "DONE! When you login, emwm should start automatically. Use ALT+SHIFT+ENTER to open xterm and run install an AUR helper of your choice. Use it to install librewolf-bin and catclock-git to finalize the install."
