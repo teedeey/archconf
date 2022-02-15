@@ -71,9 +71,10 @@ cd ..
 chown -R $username:$username utils
 cp -a utils /usr/local/src
 rm -rf utils
+chown $username:$username .emwmrc
 chown $username:$username .xinitrc
 chown $username:$username .Xdefaults
-cp .xinitrc .Xdefaults /home/$username
+cp .emwmrc .xinitrc .Xdefaults /home/$username
 
 echo "Installing LibreWolf and Thunderbird..."
 pacman --needed --noconfirm -S thunderbird
