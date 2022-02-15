@@ -5,8 +5,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-echo "This script installs yay, doas, Enhanced Motif WM (emwm), xautolock, xterm, LibreWolf, Thunderbird, and my configs."
-echo "Run this from the git repo directory."
+echo "This script installs doas, Enhanced Motif WM (emwm), xautolock, xterm, LibreWolf, Thunderbird, and my configs."
+echo "Run this from the git repo directory, yay MUST be installed."
 echo "Supported distros: Arch-based distros, that's it. If you're running anything else, here's your chance to quit."
 sleep 8
 echo "OK, continuing..."
@@ -24,13 +24,12 @@ pacman -Syu
 echo "Installing development packages..."
 pacman --needed --noconfirm -S base-devel git wget
 
-echo "Installing yay AUR helper..."
+echo "Configuring yay AUR helper..."
 pacman --needed --noconfirm -S sudo opendoas
 chmod 0660 /etc/sudoers
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 chmod 0440 /etc/sudoers
 chown -R $username:$username /usr/local/src
-su -c 'cd /usr/local/src && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si && yay -Y --gendb && yay -Syu --devel && yay -Y --devel --save' - $username
 
 echo "Installing Xorg..."
 pacman --needed --noconfirm -S xorg-server xorg-xinit xorg-xrandr libxext libxt xorgproto libx11 libxinerama libxft webkit2gtk xterm
@@ -62,15 +61,17 @@ cd emwm
 make
 make install clean
 cd ..
+chown -R $username:$username emwm
 cp -a emwm /usr/local/src
 rm -rf emwm
 cd utils
 make
 make install clean
 cd ..
+chown -R $username:$username utils
 cp -a utils /usr/local/src
 rm -rf utils
-yay -S catclock-git
+su -c 'yay -S catclock-git' - $username
 chown $username:$username .xinitrc
 chown $username:$username .Xdefaults
 cp .xinitrc .Xdefaults /home/$username
